@@ -15,8 +15,14 @@ app.use(routes)
 const PORT = process.env.PORT || 5000
 
 const start = async () => {
-  await connectDB()
-  app.listen(PORT, () => console.log(`Server listening on ${PORT}`))
+  try {
+    console.log('Starting server...')
+    await connectDB()
+    app.listen(PORT, () => console.log(`Server listening on ${PORT}`))
+  } catch (error) {
+    console.error('Failed to start server:', error)
+    process.exit(1)
+  }
 }
 
-start()
+start().catch(console.error)
